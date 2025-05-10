@@ -1,0 +1,39 @@
+grafana:
+  enabled: true
+  adminUser: admin
+  adminPassword: admin
+  ingress:
+    enabled: true
+    pathType: Prefix
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - grafana.med.cheznouslabas.fr
+    path : /
+    tls:
+      - secretName: grafana-med-tls-secret # The secret where the TLS certificate will be stored
+        hosts:
+          - grafana.med.cheznouslabas.fr 
+
+prometheus:
+  enabled: true
+  ingress:
+    enabled: true
+    pathType: Prefix
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - prometheus.med.cheznouslabas.fr
+    path : /
+    tls:
+      - secretName: prometheus-med-tls-secret # The secret where the TLS certificate will be stored
+        hosts:
+          - prometheus.med.cheznouslabas.fr 
+
+  

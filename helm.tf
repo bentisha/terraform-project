@@ -32,3 +32,39 @@ resource "helm_release" "cert_manager" {
   values = [file("${path.module}/kubernetes/helm/cert-manager/values.yaml")]
   depends_on = [ kubernetes_namespace.cert_manager ]
 }
+
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+  depends_on = [helm_release.cert_manager]
+}
+
+resource "helm_release" "kube_prometheus_stack" {
+  name       = "kube-prometheus-stack"
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  chart      = "kube-prometheus-stack"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  version    = "69.3.2" # Specify the desired version
+
+  values = [file("${path.module}/kubernetes/helm/kube-prometheus-stack/values.yaml")]
+  depends_on = [kubernetes_namespace.monitoring]
+}
+
+resource "kubernetes_namespace" "keda" {
+  metadata {
+    name = "keda"
+  }
+  depends_on = [module.kubernetes]
+}
+
+resource "helm_release" "keda" {
+  name       = "keda"
+  namespace  = kubernetes_namespace.keda.metadata[0].name
+  chart      = "keda"
+  repository = "https://kedacore.github.io/charts"
+  version    = "2.12.0" # Specify the desired version
+
+  values = [file("${path.module}/kubernetes/helm/keda/values.yaml")]
+  depends_on = [kubernetes_namespace.keda]
+}

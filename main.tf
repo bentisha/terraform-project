@@ -76,4 +76,3 @@ module "kubernetes" {
   private_subnet_ids = module.network.private_subnet_ids
   depends_on = [ module.iam, module.network]
 }
-
