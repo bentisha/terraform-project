@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       workspace:
-        description: "Select the Terraform workspace to use"
+        description: "Select our Terraform workspace to use"
         required: true
         default: "dev"
         type: choice
