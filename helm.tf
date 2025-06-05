@@ -68,3 +68,5 @@ resource "helm_release" "keda" {
   values = [file("${path.module}/kubernetes/helm/keda/values.yaml")]
   depends_on = [kubernetes_namespace.keda]
 }
+
+
