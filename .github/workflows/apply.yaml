@@ -47,7 +47,7 @@ jobs:
 
     # Step 5: ceck Terraform version
     - name: Terraform Format Check
-      run: terraform fmt -check
+      run: terraform fmt -recursive  
     # Step 6: Validate Terraform configuration
     - name: Terraform Validate
       run: terraform validate    
