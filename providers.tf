@@ -14,7 +14,7 @@ terraform {
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
-      version = ">= 1.7.0"
+      version = ">= 1.19.0"
     }
   }
 
@@ -46,6 +46,7 @@ provider "kubectl" {
   host                   = data.aws_eks_cluster.my_cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.my_cluster.certificate_authority[0].data)
   token                  = data.aws_eks_cluster_auth.my_cluster.token
+   load_config_file       = false
 }
 
 provider "helm" {
