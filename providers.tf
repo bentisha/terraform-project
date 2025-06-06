@@ -20,7 +20,7 @@ terraform {
 
 }
 
-# Approach #2: Use environment variables to set credentials
+# Approach #2: Use environment variables for  credentials
 provider "aws" {
   region = "us-east-1"
 }

@@ -45,17 +45,24 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-  # step 5  : Select Workspace
+    # Step 5: ceck Terraform version
+    - name: Terraform Format Check
+      run: terraform fmt -check
+    # Step 6: Validate Terraform configuration
+    - name: Terraform Validate
+      run: terraform validate    
+
+  # step 7  : Select Workspace
     - name: Select Workspace
       run: |
         terraform workspace select ${{ github.event.inputs.workspace }} || terraform workspace new ${{ github.event.inputs.workspace }}
 
-    # Step 5: Plan Terraform changes
+    # Step 8: Plan Terraform changes
     
     - name: Terraform plan
       run: terraform plan
 
-    # Step 6: Apply Terraform changes
+    # Step 9: Apply Terraform changes
     
     - name: Terraform Apply
       run: terraform apply -auto-approve
